@@ -25,15 +25,15 @@
             speed = temp;
         }
 
-        let buttons = function(button,text,idd,number)
+        let buttons = function(button,text,buttonId,speedValue)
         {
-            button.id = idd;
+            button.id = buttonId;
             main.appendChild(button);
             button.innerHTML = text;
 
             button.onclick = function()
             {
-                setTimeout(changingSpeed(number),1000);
+                setTimeout(changingSpeed(speedValue),1000);
                 console.log(button);
             }
         }
