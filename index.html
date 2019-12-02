@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="Stylesheet" href="style.css">
+    <link rel="shortcut icon" href="glowa.png">
+    <title>Świąteczny Wonsz</title>
+</head>
+<body>
+    <script>
+        let speed = 100;
+
+        let nav = document.createElement("nav");
+        document.body.appendChild(nav);
+        nav.innerText = "Wesołych Świąt!!!"
+
+        let main = document.createElement("div");
+        main.id = "main";
+        document.body.appendChild(main);
+
+        let changingSpeed = function(temp)
+        {
+            speed = temp;
+        }
+
+        let buttons = function(button,text,idd,number)
+        {
+            button.id = idd;
+            main.appendChild(button);
+            button.innerHTML = text;
+
+            button.onclick = function()
+            {
+                setTimeout(changingSpeed(number),1000);
+                console.log(button);
+            }
+        }
+        let bt1 = document.createElement("button");
+        let bt2 = document.createElement("button");
+        let bt3 = document.createElement("button");
+        buttons(bt1, "Łatwy", "bt1",500);
+        buttons(bt2,"Średni", "bt2",300);
+        buttons(bt3,"Trudny", "bt3",100);
+
+        let board = document.createElement("div");
+        board.id = "board";
+        main.appendChild(board);
+
+        let horizontalNumberOfPoints = 20;
+        let verticalNumberOfPoints = 20;
+        let widthOfPoint = 30;
+        let heightOfPoint = 30;
+
+        for(let i = 0; i < horizontalNumberOfPoints; i++)
+        {
+            for(let j = 0; j < verticalNumberOfPoints; j++)
+            {
+                let pointsOnBoard = document.createElement("div");
+                pointsOnBoard.className = "pointsOnBoard";
+                pointsOnBoard.style.left = i * widthOfPoint + 'px';
+                pointsOnBoard.style.top = j * heightOfPoint + 'px';
+                board.appendChild(pointsOnBoard);
+
+                board.style.width = i * widthOfPoint + "px";
+
+                if( i == 0 || j == 0 || i == horizontalNumberOfPoints - 1 || j == verticalNumberOfPoints - 1)
+                {
+                    pointsOnBoard.style.backgroundImage = "url('choinkaa.png')";
+                }
+            }
+        }
+        let point = 0;
+        let tableOfPoints = document.createElement("div");
+        tableOfPoints.id = "tableOfPoints";
+        main.appendChild(tableOfPoints);
+        tableOfPoints.innerText = "Twoje punkty \n" + point;
+
+        let snake = document.createElement("div");
+        snake.id = "snake";
+        board.appendChild(snake);
+        snake.style.left = widthOfPoint * 5 + "px";
+        snake.style.top = heightOfPoint * 5 + "px";
+
+        //for(let i= 0; i < 5; i++)
+        //{
+            let tale = document.createElement("div");
+            tale.id = "tale";
+            board.appendChild(tale);
+            tale.style.left = widthOfPoint * (4) + "px";
+            tale.style.top = widthOfPoint * (5) + "px";
+       // }
+
+        let right = false;
+        let left = false;
+        let up = false;
+        let down = false;
+
+        //console.log(document.getElementById("snake").style.left.slice(0,document.getElementById("snake").style.left.length-2)/widthOfPoint)
+        let horizontalPositionOfSnake = document.getElementById("snake").style.left.slice(0,document.getElementById("snake").style.left.length-2)/widthOfPoint;
+        let verticalPositionOfSnake = document.getElementById("snake").style.top.slice(0,document.getElementById("snake").style.top.length-2)/widthOfPoint; 
+        let RightMovingSnake = function()
+        {
+            let rightt = setInterval(function()
+            {
+                if(right == true)
+                {
+                    let headLeft = snake.style.left;
+                    let headTop = snake.style.top;
+                    if(horizontalPositionOfSnake < horizontalNumberOfPoints - 2)
+                    {  
+                        horizontalPositionOfSnake++
+                        snake.style.left = widthOfPoint * (horizontalPositionOfSnake) + "px"
+                        tale.style.left = headLeft//widthOfPoint * (horizontalPositionOfSnake - 1) + "px";
+                        tale.style.top = snake.style.top;
+                        gettingPoint();
+                    }
+                    else
+                    {
+                        loseFuntion();
+                        right = false;
+                    }
+                }
+                else{ clearInterval(rightt) }
+            },speed)
+        }
+
+        let LeftMovingSnake = function()
+        {
+        let leftt = setInterval(function()
+        {
+            if(left == true)
+            {
+                if(horizontalPositionOfSnake > 1)
+                {  
+                    horizontalPositionOfSnake--
+                    snake.style.left = widthOfPoint * horizontalPositionOfSnake + "px"
+                    tale.style.left = widthOfPoint * (horizontalPositionOfSnake + 1) + "px";
+                    tale.style.top = snake.style.top;
+                    gettingPoint();
+                }
+                else
+                {
+                    loseFuntion();
+                    left = false;
+                }
+            } 
+            else{clearInterval(leftt)}
+        },speed)
+        }
+
+        let UpMovingSnake = function()
+        {
+        let upp = setInterval(function()
+        {
+            if(up == true)
+            {
+                if(verticalPositionOfSnake > 1)
+                {  
+                    verticalPositionOfSnake--
+                    snake.style.top = heightOfPoint * verticalPositionOfSnake + "px"
+                    tale.style.top = heightOfPoint * (verticalPositionOfSnake + 1) + "px"
+                    tale.style.left = snake.style.left
+                    gettingPoint();
+                }
+                else
+                {
+                    loseFuntion();
+                    up = false;
+                }
+            }
+            else{(clearInterval(upp))}
+        },speed)
+        }
+
+        let DownMovingSnake = function()
+        {
+        let downn = setInterval(function()
+        {
+            if(down == true)
+            {
+                if(verticalPositionOfSnake < verticalNumberOfPoints - 2)
+                {  
+                    verticalPositionOfSnake++
+                    snake.style.top = heightOfPoint * verticalPositionOfSnake + "px"
+                    tale.style.top = heightOfPoint * (verticalPositionOfSnake - 1) + "px"
+                    tale.style.left = snake.style.left
+                    gettingPoint();
+                }
+                else
+                {
+                    loseFuntion();
+                    down = false;
+                }
+            }
+            else{clearInterval(downn)}
+        },speed)
+        }
+        
+        document.onkeydown = function(event) 
+        {
+            switch(event.keyCode)
+            {
+                case 37: 
+                    right = false;
+                    left = true;
+                    up = false;
+                    down = false;
+                    LeftMovingSnake();
+                break; 
+
+                case 38:
+                    right = false;
+                    left = false;
+                    up = true;
+                    down = false;
+                    UpMovingSnake();
+                break;
+
+                case 39:
+                    right = true;
+                    left = false;
+                    up = false;
+                    down = false;
+                    RightMovingSnake();
+                break;
+
+                case 40:
+                    right = false;
+                    left = false;
+                    up = false;
+                    down = true;
+                    DownMovingSnake();
+                break;
+
+            }   
+        }
+            let price = document.createElement("div");
+            price.id = "price";
+
+        let priceFunction = function()
+        {
+            board.appendChild(price);
+            let randomLeftPrice = Math.floor((Math.random() * (horizontalNumberOfPoints-3)) + 2);
+            let leftPositionOfPrice = randomLeftPrice * widthOfPoint + "px";
+            let randomTopPrice = Math.floor((Math.random() * (verticalNumberOfPoints-3)) + 2);
+            let topPositionOfPrice = randomTopPrice * heightOfPoint + "px";
+
+            console.log(leftPositionOfPrice)
+            console.log(topPositionOfPrice)
+            price.style.left = leftPositionOfPrice;
+            price.style.top = topPositionOfPrice;
+        }
+        priceFunction();
+
+        let loseFuntion = function()
+        {
+            document.getElementById("snake").style.left = widthOfPoint * 5 + "px";
+            document.getElementById("snake").style.top = heightOfPoint * 5 + "px";
+            alert("Przegrałeś :(")
+            horizontalPositionOfSnake = document.getElementById("snake").style.left.slice(0,document.getElementById("snake").style.left.length-2)/widthOfPoint;
+            verticalPositionOfSnake = document.getElementById("snake").style.top.slice(0,document.getElementById("snake").style.top.length-2)/widthOfPoint; 
+            point = 0;
+            tableOfPoints.innerText = "Twoje punkty \n" + point;
+            clearInterval(loseFuntion)
+        }
+        let gettingPoint = function()
+        {
+            //console.log(document.getElementById("price").style.left)
+            //console.log(document.getElementById("snake").style.left)
+            if(document.getElementById("price").style.left == document.getElementById("snake").style.left && document.getElementById("price").style.top == document.getElementById("snake").style.top)
+            {
+                console.log("punkt :)");
+                point++
+                tableOfPoints.innerText = "Twoje punkty \n" + point;
+                priceFunction();
+            }
+        }
+    </script>
+</body>
+</html>

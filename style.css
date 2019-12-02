@@ -1,0 +1,109 @@
+@font-face
+        {
+        font-family: Snowhouse;
+        src:url(Snowhouse.otf);
+        }
+body
+{
+    width: 99%;
+    height: 100%;
+    background-image: url("tlo.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: Snowhouse;
+}
+nav
+{
+    background-color: darkred;
+    color: white;
+    font-size: 25px;
+    border: 3px groove white;
+    text-align: center;
+    margin-bottom: 5px;
+}
+#main
+{
+    height: 100%;
+    width: 100%;
+}
+#board 
+{
+    position: relative;
+    margin: 0 auto;
+}
+.pointsOnBoard
+{
+    width: 29px;
+    height: 29px;
+    border: 1px solid silver;
+    background-image: url("tloo.png");
+    background-color: #034f20;
+    position: absolute;
+    background-size: cover;
+    z-index: -1;
+}
+#snake
+{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url("glowa.png");
+    background-size: 100% 100%;
+    z-index: 30;
+}
+#tale
+{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url("ogon.png");
+    background-size: 70% 100%;
+    background-repeat: no-repeat;
+    z-index: 30;
+}
+#price
+{
+    background-image: url("nagroda.png");
+    background-size: 70% 100%;
+    background-repeat: no-repeat;
+    z-index: 30;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+}
+#tableOfPoints
+{
+    background-color: darkred;
+    color: white;
+    font-size: 20px;
+    border: 3px groove white;
+    position:absolute;
+    width: 200px;
+    text-align: center;
+    font-family: Snowhouse;
+    height: 75px;
+}
+#bt1, #bt2 , #bt3
+{
+    font-family: Snowhouse;
+    background-color: darkred;
+    color: white;
+    font-size: 15px;
+    width: 200px;
+    text-align: center;
+    position: absolute;
+    margin-left: 3px;
+}
+#bt1
+{
+    top: 150px;
+}
+#bt2
+{
+    top: 190px;
+}
+#bt3
+{
+    top: 230px;
+}
