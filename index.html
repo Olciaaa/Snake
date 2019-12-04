@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="Stylesheet" href="style.css">
     <link rel="shortcut icon" href="glowa.png">
@@ -11,6 +10,7 @@
 <body>
     <script>
         let speed = 100;
+        let beginningPositionOfSnake = 5;
 
         let nav = document.createElement("nav");
         document.body.appendChild(nav);
@@ -78,42 +78,57 @@
         tableOfPoints.innerText = "Twoje punkty \n" + point;
 
         let snake = document.createElement("div");
-        snake.id = "snake";
+        snake.id = "0";
+        snake.className = "snake"
         board.appendChild(snake);
-        snake.style.left = widthOfPoint * 5 + "px";
-        snake.style.top = heightOfPoint * 5 + "px";
+        snake.style.left = widthOfPoint * beginningPositionOfSnake + "px";
+        snake.style.top = heightOfPoint * beginningPositionOfSnake + "px";
 
-        //for(let i= 0; i < 5; i++)
-        //{
-            let tale = document.createElement("div");
-            tale.id = "tale";
-            board.appendChild(tale);
-            tale.style.left = widthOfPoint * (4) + "px";
-            tale.style.top = widthOfPoint * (5) + "px";
-       // }
+        let tailLength = 0
+
+        let growingSnake = function()
+        {
+            let tail = document.createElement("div");
+            tail.className = "tail";
+            tail.id = tailLength + 1;
+            tail.style.width = "0px";
+            board.appendChild(tail);
+            tailLength++
+        }
 
         let right = false;
         let left = false;
         let up = false;
         let down = false;
 
-        //console.log(document.getElementById("snake").style.left.slice(0,document.getElementById("snake").style.left.length-2)/widthOfPoint)
-        let horizontalPositionOfSnake = document.getElementById("snake").style.left.slice(0,document.getElementById("snake").style.left.length-2)/widthOfPoint;
-        let verticalPositionOfSnake = document.getElementById("snake").style.top.slice(0,document.getElementById("snake").style.top.length-2)/widthOfPoint; 
-        let RightMovingSnake = function()
+        let horizontalPositionOf0 = document.getElementById("0").style.left.slice(0,document.getElementById("0").style.left.length-2)/widthOfPoint;
+        let verticalPositionOf0 = document.getElementById("0").style.top.slice(0,document.getElementById("0").style.top.length-2)/widthOfPoint; 
+
+        let headLeft = [];
+        let headTop = [];
+
+        let RightMoving0 = function()
         {
             let rightt = setInterval(function()
             {
                 if(right == true)
                 {
-                    let headLeft = snake.style.left;
-                    let headTop = snake.style.top;
-                    if(horizontalPositionOfSnake < horizontalNumberOfPoints - 2)
+                    document.getElementById(tailLength).style.width = "25px";
+                    for(let i = 0; i < tailLength + 1; i++)
+                    {
+                        headLeft[i] = document.getElementById(i).style.left;
+                        headTop[i] = document.getElementById(i).style.top;
+                    }
+
+                    if(horizontalPositionOf0 < horizontalNumberOfPoints - 2)
                     {  
-                        horizontalPositionOfSnake++
-                        snake.style.left = widthOfPoint * (horizontalPositionOfSnake) + "px"
-                        tale.style.left = headLeft//widthOfPoint * (horizontalPositionOfSnake - 1) + "px";
-                        tale.style.top = snake.style.top;
+                        horizontalPositionOf0++
+                        snake.style.left = widthOfPoint * (horizontalPositionOf0) + "px"
+                        for(let i = 0; i < tailLength; i++)
+                        {
+                            document.getElementById(i+1).style.left = headLeft[i];
+                            document.getElementById(i+1).style.top = headTop[i];
+                        }
                         gettingPoint();
                     }
                     else
@@ -126,18 +141,27 @@
             },speed)
         }
 
-        let LeftMovingSnake = function()
+        let LeftMoving0 = function()
         {
         let leftt = setInterval(function()
         {
             if(left == true)
             {
-                if(horizontalPositionOfSnake > 1)
+                document.getElementById(tailLength).style.width = "25px";
+                for(let i = 0; i < tailLength + 1; i++)
+                {
+                    headLeft[i] = document.getElementById(i).style.left;
+                    headTop[i] = document.getElementById(i).style.top;
+                }
+                if(horizontalPositionOf0 > 1)
                 {  
-                    horizontalPositionOfSnake--
-                    snake.style.left = widthOfPoint * horizontalPositionOfSnake + "px"
-                    tale.style.left = widthOfPoint * (horizontalPositionOfSnake + 1) + "px";
-                    tale.style.top = snake.style.top;
+                    horizontalPositionOf0--
+                    snake.style.left = widthOfPoint * horizontalPositionOf0 + "px"
+                    for(let i = 0; i < tailLength; i++)
+                    {
+                        document.getElementById(i+1).style.left = headLeft[i];
+                        document.getElementById(i+1).style.top = headTop[i];
+                    }
                     gettingPoint();
                 }
                 else
@@ -150,18 +174,28 @@
         },speed)
         }
 
-        let UpMovingSnake = function()
+        let UpMoving0 = function()
         {
         let upp = setInterval(function()
         {
             if(up == true)
             {
-                if(verticalPositionOfSnake > 1)
+                document.getElementById(tailLength).style.width = "25px";
+                for(let i = 0; i < tailLength + 1; i++)
+                {
+                    headLeft[i] = document.getElementById(i).style.left;
+                    headTop[i] = document.getElementById(i).style.top;
+                }
+
+                if(verticalPositionOf0 > 1)
                 {  
-                    verticalPositionOfSnake--
-                    snake.style.top = heightOfPoint * verticalPositionOfSnake + "px"
-                    tale.style.top = heightOfPoint * (verticalPositionOfSnake + 1) + "px"
-                    tale.style.left = snake.style.left
+                    verticalPositionOf0--
+                    snake.style.top = heightOfPoint * verticalPositionOf0 + "px"
+                    for(let i = 0; i < tailLength; i++)
+                    {
+                        document.getElementById(i+1).style.left = headLeft[i];
+                        document.getElementById(i+1).style.top = headTop[i];
+                    }
                     gettingPoint();
                 }
                 else
@@ -174,18 +208,27 @@
         },speed)
         }
 
-        let DownMovingSnake = function()
+        let DownMoving0 = function()
         {
         let downn = setInterval(function()
         {
             if(down == true)
             {
-                if(verticalPositionOfSnake < verticalNumberOfPoints - 2)
+                document.getElementById(tailLength).style.width = "25px";
+                for(let i = 0; i < tailLength + 1; i++)
+                {
+                    headLeft[i] = document.getElementById(i).style.left;
+                    headTop[i] = document.getElementById(i).style.top;
+                }
+                if(verticalPositionOf0 < verticalNumberOfPoints - 2)
                 {  
-                    verticalPositionOfSnake++
-                    snake.style.top = heightOfPoint * verticalPositionOfSnake + "px"
-                    tale.style.top = heightOfPoint * (verticalPositionOfSnake - 1) + "px"
-                    tale.style.left = snake.style.left
+                    verticalPositionOf0++
+                    snake.style.top = heightOfPoint * verticalPositionOf0 + "px"
+                    for(let i = 0; i < tailLength; i++)
+                    {
+                        document.getElementById(i+1).style.left = headLeft[i];
+                        document.getElementById(i+1).style.top = headTop[i];
+                    }
                     gettingPoint();
                 }
                 else
@@ -207,33 +250,32 @@
                     left = true;
                     up = false;
                     down = false;
-                    LeftMovingSnake();
-                break; 
+                    LeftMoving0();
+                    break; 
 
                 case 38:
                     right = false;
                     left = false;
                     up = true;
                     down = false;
-                    UpMovingSnake();
-                break;
+                    UpMoving0();
+                    break;
 
                 case 39:
                     right = true;
                     left = false;
                     up = false;
                     down = false;
-                    RightMovingSnake();
-                break;
+                    RightMoving0();
+                    break;
 
                 case 40:
                     right = false;
                     left = false;
                     up = false;
                     down = true;
-                    DownMovingSnake();
-                break;
-
+                    DownMoving0();
+                    break;
             }   
         }
             let price = document.createElement("div");
@@ -247,8 +289,6 @@
             let randomTopPrice = Math.floor((Math.random() * (verticalNumberOfPoints-3)) + 2);
             let topPositionOfPrice = randomTopPrice * heightOfPoint + "px";
 
-            console.log(leftPositionOfPrice)
-            console.log(topPositionOfPrice)
             price.style.left = leftPositionOfPrice;
             price.style.top = topPositionOfPrice;
         }
@@ -256,24 +296,27 @@
 
         let loseFuntion = function()
         {
-            document.getElementById("snake").style.left = widthOfPoint * 5 + "px";
-            document.getElementById("snake").style.top = heightOfPoint * 5 + "px";
+            document.getElementById("0").style.left = widthOfPoint * 5 + "px";
+            document.getElementById("0").style.top = heightOfPoint * 5 + "px";
             alert("Przegrałeś :(")
-            horizontalPositionOfSnake = document.getElementById("snake").style.left.slice(0,document.getElementById("snake").style.left.length-2)/widthOfPoint;
-            verticalPositionOfSnake = document.getElementById("snake").style.top.slice(0,document.getElementById("snake").style.top.length-2)/widthOfPoint; 
+            horizontalPositionOf0 = document.getElementById("0").style.left.slice(0,document.getElementById("0").style.left.length-2)/widthOfPoint;
+            verticalPositionOf0 = document.getElementById("0").style.top.slice(0,document.getElementById("0").style.top.length-2)/widthOfPoint; 
             point = 0;
             tableOfPoints.innerText = "Twoje punkty \n" + point;
             clearInterval(loseFuntion)
+            for(let i = 1; i <= tailLength; i++)
+            {
+                board.removeChild(document.getElementById(i))
+            }
+            tailLength = 0;
         }
         let gettingPoint = function()
         {
-            //console.log(document.getElementById("price").style.left)
-            //console.log(document.getElementById("snake").style.left)
-            if(document.getElementById("price").style.left == document.getElementById("snake").style.left && document.getElementById("price").style.top == document.getElementById("snake").style.top)
+            if(document.getElementById("price").style.left == document.getElementById("0").style.left && document.getElementById("price").style.top == document.getElementById("0").style.top)
             {
-                console.log("punkt :)");
                 point++
                 tableOfPoints.innerText = "Twoje punkty \n" + point;
+                growingSnake();
                 priceFunction();
             }
         }
