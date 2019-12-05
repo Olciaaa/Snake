@@ -9,7 +9,7 @@
 </head>
 <body>
     <script>
-        let speed = 500;
+        let speed = 100;
         let beginningPositionOfSnake = 5;
 
         let nav = document.createElement("nav");
@@ -27,7 +27,7 @@
             alert.className = "alert"; 
 
             let alertImage = document.createElement("img");
-            alertImage.src = "olaf.gif";
+            alertImage.src = "images/olaf.gif";
             alert.appendChild(alertImage);
             alertImage.className = "alertImage";
 
@@ -99,7 +99,7 @@
 
                 if( i == 0 || j == 0 || i == horizontalNumberOfPoints - 1 || j == verticalNumberOfPoints - 1)
                 {
-                    pointsOnBoard.style.backgroundImage = "url('choinkaa.png')";
+                    pointsOnBoard.style.backgroundImage = "url('images/choinkaa.png')";
                 }
             }
         }
