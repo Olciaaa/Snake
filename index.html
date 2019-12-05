@@ -9,7 +9,7 @@
 </head>
 <body>
     <script>
-        let speed = 100;
+        let speed = 500;
         let beginningPositionOfSnake = 5;
 
         let nav = document.createElement("nav");
@@ -20,10 +20,43 @@
         main.id = "main";
         document.body.appendChild(main);
 
+        function alert(b) 
+        {
+            let alert = document.createElement("div");
+            main.appendChild(alert);
+            alert.className = "alert"; 
+
+            let alertImage = document.createElement("img");
+            alertImage.src = "olaf.gif";
+            alert.appendChild(alertImage);
+            alertImage.className = "alertImage";
+
+            let alertP = document.createElement("p");
+            alert.appendChild(alertP);
+            alertP.className = "alertP";
+            alertP.innerHTML = b;
+                
+            let alertButton = document.createElement("button");
+            alertButton.className = "alertButton";
+            alertButton.innerHTML = "Próbuję jeszcze raz";
+            alert.appendChild(alertButton);
+
+            alertButton.onclick = function()
+            {
+                main.removeChild(alert);
+                lose = true;
+            }
+        }
+
         let changingSpeed = function(temp)
         {
             speed = temp;
         }
+
+        let speedTable = document.createElement("div");
+        speedTable.id = "speedTable";
+        main.appendChild(speedTable);
+        speedTable.innerText = "Aby rozpocząć grę, wciśnij dowolną strzałkę. \n Domyślny poziom trudności to średni. Jeśli chcesz go zmienić wybierz jeden z poniższych";
 
         let buttons = function(button,text,buttonId,speedValue)
         {
@@ -34,15 +67,14 @@
             button.onclick = function()
             {
                 setTimeout(changingSpeed(speedValue),1000);
-                console.log(button);
             }
         }
         let bt1 = document.createElement("button");
         let bt2 = document.createElement("button");
         let bt3 = document.createElement("button");
-        buttons(bt1, "Łatwy", "bt1",500);
-        buttons(bt2,"Średni", "bt2",300);
-        buttons(bt3,"Trudny", "bt3",100);
+        buttons(bt1, "Łatwy", "bt1",300);
+        buttons(bt2,"Średni", "bt2",100);
+        buttons(bt3,"Trudny", "bt3",50);
 
         let board = document.createElement("div");
         board.id = "board";
@@ -107,13 +139,19 @@
         let headLeft = [];
         let headTop = [];
 
-        let RightMoving0 = function()
+        let lose = true;
+
+        let rightMovingSnake = function()
         {
             let rightt = setInterval(function()
             {
-                if(right == true)
+                if(right == true && lose == true)
                 {
                     document.getElementById(tailLength).style.width = "25px";
+                    for(let i = 0; i <= tailLength; i++)
+                    {
+                        document.getElementById(i).style.transform = "rotate(0deg)";
+                    }
                     for(let i = 0; i < tailLength + 1; i++)
                     {
                         headLeft[i] = document.getElementById(i).style.left;
@@ -130,6 +168,17 @@
                             document.getElementById(i+1).style.top = headTop[i];
                         }
                         gettingPoint();
+                        for(let i = 1;i <= tailLength; i++) 
+                        {
+                            for(let j = 1;j <= tailLength; j++)
+                            {
+                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
+                                {
+                                    clearInterval(rightt);
+                                    loseFuntion();
+                                }
+                            };
+                        };
                     }
                     else
                     {
@@ -141,13 +190,18 @@
             },speed)
         }
 
-        let LeftMoving0 = function()
+        let leftMovingSnake = function()
         {
         let leftt = setInterval(function()
         {
-            if(left == true)
+            if(left == true && lose == true)
             {
                 document.getElementById(tailLength).style.width = "25px";
+                for(let i = 0; i <= tailLength; i++)
+                {
+                    document.getElementById(i).style.transform = "scale(-1,1)";
+                }
+
                 for(let i = 0; i < tailLength + 1; i++)
                 {
                     headLeft[i] = document.getElementById(i).style.left;
@@ -163,6 +217,18 @@
                         document.getElementById(i+1).style.top = headTop[i];
                     }
                     gettingPoint();
+
+                    for(let i = 1;i <= tailLength; i++) 
+                        {
+                            for(let j = 1;j <= tailLength; j++)
+                            {
+                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
+                                {
+                                    clearInterval(leftt);
+                                    loseFuntion();
+                                }
+                            };
+                        };
                 }
                 else
                 {
@@ -174,13 +240,17 @@
         },speed)
         }
 
-        let UpMoving0 = function()
+        let upMovingSnake = function()
         {
         let upp = setInterval(function()
         {
-            if(up == true)
+            if(up == true && lose == true)
             {
                 document.getElementById(tailLength).style.width = "25px";
+                for(let i = 0; i <= tailLength; i++)
+                {
+                    document.getElementById(i).style.transform = "rotate(-90deg)";
+                }
                 for(let i = 0; i < tailLength + 1; i++)
                 {
                     headLeft[i] = document.getElementById(i).style.left;
@@ -197,6 +267,17 @@
                         document.getElementById(i+1).style.top = headTop[i];
                     }
                     gettingPoint();
+                    for(let i = 1;i <= tailLength; i++) 
+                        {
+                            for(let j = 1;j <= tailLength; j++)
+                            {
+                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
+                                {
+                                    clearInterval(upp);
+                                    loseFuntion();
+                                }
+                            };
+                        };
                 }
                 else
                 {
@@ -208,13 +289,17 @@
         },speed)
         }
 
-        let DownMoving0 = function()
+        let downMovingSnake = function()
         {
         let downn = setInterval(function()
         {
-            if(down == true)
+            if(down == true && lose == true)
             {
                 document.getElementById(tailLength).style.width = "25px";
+                for(let i = 0; i <= tailLength; i++)
+                {
+                    document.getElementById(i).style.transform = "rotate(90deg)";
+                }
                 for(let i = 0; i < tailLength + 1; i++)
                 {
                     headLeft[i] = document.getElementById(i).style.left;
@@ -230,6 +315,17 @@
                         document.getElementById(i+1).style.top = headTop[i];
                     }
                     gettingPoint();
+                    for(let i = 1;i <= tailLength; i++) 
+                        {
+                            for(let j = 1;j <= tailLength; j++)
+                            {
+                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
+                                {
+                                    clearInterval(downn);
+                                    loseFuntion();
+                                }
+                            };
+                        };
                 }
                 else
                 {
@@ -250,7 +346,7 @@
                     left = true;
                     up = false;
                     down = false;
-                    LeftMoving0();
+                    leftMovingSnake();
                     break; 
 
                 case 38:
@@ -258,7 +354,7 @@
                     left = false;
                     up = true;
                     down = false;
-                    UpMoving0();
+                    upMovingSnake();
                     break;
 
                 case 39:
@@ -266,7 +362,7 @@
                     left = false;
                     up = false;
                     down = false;
-                    RightMoving0();
+                    rightMovingSnake();
                     break;
 
                 case 40:
@@ -274,7 +370,7 @@
                     left = false;
                     up = false;
                     down = true;
-                    DownMoving0();
+                    downMovingSnake();
                     break;
             }   
         }
@@ -293,22 +389,26 @@
             price.style.top = topPositionOfPrice;
         }
         priceFunction();
-
         let loseFuntion = function()
         {
-            document.getElementById("0").style.left = widthOfPoint * 5 + "px";
-            document.getElementById("0").style.top = heightOfPoint * 5 + "px";
-            alert("Przegrałeś :(")
-            horizontalPositionOf0 = document.getElementById("0").style.left.slice(0,document.getElementById("0").style.left.length-2)/widthOfPoint;
-            verticalPositionOf0 = document.getElementById("0").style.top.slice(0,document.getElementById("0").style.top.length-2)/widthOfPoint; 
-            point = 0;
-            tableOfPoints.innerText = "Twoje punkty \n" + point;
-            clearInterval(loseFuntion)
-            for(let i = 1; i <= tailLength; i++)
+            if(lose == true)
             {
-                board.removeChild(document.getElementById(i))
+                alert("Ziom przegrałeś. \n Twój wynik to " + point + " pkt. \n Ale nie poddawaj się, próbuj dalej!!!");
+                document.getElementById("0").style.left = widthOfPoint * beginningPositionOfSnake + "px";
+                document.getElementById("0").style.top = heightOfPoint * beginningPositionOfSnake + "px";
+                document.getElementById("0").style.transform = "rotate(0deg)";
+                horizontalPositionOf0 = document.getElementById("0").style.left.slice(0,document.getElementById("0").style.left.length-2)/widthOfPoint;
+                verticalPositionOf0 = document.getElementById("0").style.top.slice(0,document.getElementById("0").style.top.length-2)/widthOfPoint; 
+                point = 0;
+                tableOfPoints.innerText = "Twoje punkty \n" + point;
+                clearInterval(loseFuntion)
+                for(let i = 1; i <= tailLength; i++)
+                {
+                    board.removeChild(document.getElementById(i))
+                }
+                tailLength = 0;
+                lose = false;
             }
-            tailLength = 0;
         }
         let gettingPoint = function()
         {
