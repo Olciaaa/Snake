@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="Stylesheet" href="style.css">
-    <link rel="shortcut icon" href="glowa.png">
+    <link rel="shortcut icon" href="images/glowa.png">
     <title>Świąteczny Wonszszsz</title>
 </head>
 <body>
@@ -342,35 +342,44 @@
             switch(event.keyCode)
             {
                 case 37: 
+                if(right != true && left != true)
+                {
                     right = false;
                     left = true;
                     up = false;
                     down = false;
                     leftMovingSnake();
+                }
                     break; 
-
                 case 38:
+                if(down != true && up != true)
+                {
                     right = false;
                     left = false;
                     up = true;
                     down = false;
                     upMovingSnake();
+                }
                     break;
-
                 case 39:
+                if(left != true && right != true)
+                {
                     right = true;
                     left = false;
                     up = false;
                     down = false;
                     rightMovingSnake();
+                }
                     break;
-
                 case 40:
+                if(up != true && down != true)
+                {
                     right = false;
                     left = false;
                     up = false;
                     down = true;
                     downMovingSnake();
+                }
                     break;
             }   
         }
