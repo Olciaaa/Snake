@@ -410,6 +410,10 @@
                 verticalPositionOf0 = document.getElementById("0").style.top.slice(0,document.getElementById("0").style.top.length-2)/widthOfPoint; 
                 point = 0;
                 tableOfPoints.innerText = "Twoje punkty \n" + point;
+                right = false;
+                left = false;
+                up = false;
+                down = false;
                 clearInterval(loseFuntion)
                 for(let i = 1; i <= tailLength; i++)
                 {
