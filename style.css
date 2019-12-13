@@ -15,7 +15,7 @@ body
 }
 nav
 {
-    background-color: darkred;
+    background-color: rgba(139, 0, 0, 0.9);
     color: white;
     font-size: 25px;
     border: 3px groove white;
@@ -73,10 +73,11 @@ nav
     height: 29px;
     border: 1px solid silver;
     background-image: url("images/tloo.png");
-    background-color: #034f20;
+    background-color: rgba(0, 78, 0, 0.9);
     position: absolute;
     background-size: cover;
     z-index: -20;
+    opacity: 0.95;
 }
 .snake
 {
@@ -109,7 +110,7 @@ nav
 }
 #tableOfPoints
 {
-    background-color: darkred;
+    background-color: rgba(139, 0, 0, 0.8);
     color: white;
     font-size: 20px;
     border: 3px groove white;
@@ -123,7 +124,7 @@ nav
 }
 #speedTable
 {
-    background-color: darkred;
+    background-color: rgba(139, 0, 0, 0.8);
     color: white;
     font-size: 15px;
     border: 2px dotted white;
@@ -138,7 +139,7 @@ nav
 #bt1, #bt2 , #bt3
 {
     font-family: Snowhouse;
-    background-color: darkred;
+    background-color: rgba(139, 0, 0, 0.8);
     color: white;
     font-size: 15px;
     width: 15%;

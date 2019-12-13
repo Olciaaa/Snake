@@ -100,6 +100,7 @@
                 if( i == 0 || j == 0 || i == horizontalNumberOfPoints - 1 || j == verticalNumberOfPoints - 1)
                 {
                     pointsOnBoard.style.backgroundImage = "url('images/choinkaa.png')";
+                    pointsOnBoard.style.opacity = "1"
                 }
             }
         }
@@ -147,17 +148,7 @@
             {
                 if(right == true && lose == true)
                 {
-                    document.getElementById(tailLength).style.width = "25px";
-                    for(let i = 0; i <= tailLength; i++)
-                    {
-                        document.getElementById(i).style.transform = "rotate(0deg)";
-                    }
-                    for(let i = 0; i < tailLength + 1; i++)
-                    {
-                        headLeft[i] = document.getElementById(i).style.left;
-                        headTop[i] = document.getElementById(i).style.top;
-                    }
-
+                    rotationOfSnake("rotate(0deg)");
                     if(horizontalPositionOf0 < horizontalNumberOfPoints - 2)
                     {  
                         horizontalPositionOf0++
@@ -168,17 +159,8 @@
                             document.getElementById(i+1).style.top = headTop[i];
                         }
                         gettingPoint();
-                        for(let i = 1;i <= tailLength; i++) 
-                        {
-                            for(let j = 1;j <= tailLength; j++)
-                            {
-                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
-                                {
-                                    clearInterval(rightt);
-                                    loseFuntion();
-                                }
-                            };
-                        };
+                        curves();
+                        cuttingTale(rightt);
                     }
                     else
                     {
@@ -196,17 +178,7 @@
         {
             if(left == true && lose == true)
             {
-                document.getElementById(tailLength).style.width = "25px";
-                for(let i = 0; i <= tailLength; i++)
-                {
-                    document.getElementById(i).style.transform = "scale(-1,1)";
-                }
-
-                for(let i = 0; i < tailLength + 1; i++)
-                {
-                    headLeft[i] = document.getElementById(i).style.left;
-                    headTop[i] = document.getElementById(i).style.top;
-                }
+                rotationOfSnake("scale(-1,1)");
                 if(horizontalPositionOf0 > 1)
                 {  
                     horizontalPositionOf0--
@@ -217,18 +189,8 @@
                         document.getElementById(i+1).style.top = headTop[i];
                     }
                     gettingPoint();
-
-                    for(let i = 1;i <= tailLength; i++) 
-                        {
-                            for(let j = 1;j <= tailLength; j++)
-                            {
-                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
-                                {
-                                    clearInterval(leftt);
-                                    loseFuntion();
-                                }
-                            };
-                        };
+                    curves();
+                    cuttingTale(leftt);
                 }
                 else
                 {
@@ -246,16 +208,7 @@
         {
             if(up == true && lose == true)
             {
-                document.getElementById(tailLength).style.width = "25px";
-                for(let i = 0; i <= tailLength; i++)
-                {
-                    document.getElementById(i).style.transform = "rotate(-90deg)";
-                }
-                for(let i = 0; i < tailLength + 1; i++)
-                {
-                    headLeft[i] = document.getElementById(i).style.left;
-                    headTop[i] = document.getElementById(i).style.top;
-                }
+                rotationOfSnake("rotate(-90deg)")
 
                 if(verticalPositionOf0 > 1)
                 {  
@@ -267,17 +220,8 @@
                         document.getElementById(i+1).style.top = headTop[i];
                     }
                     gettingPoint();
-                    for(let i = 1;i <= tailLength; i++) 
-                        {
-                            for(let j = 1;j <= tailLength; j++)
-                            {
-                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
-                                {
-                                    clearInterval(upp);
-                                    loseFuntion();
-                                }
-                            };
-                        };
+                    curves();
+                    cuttingTale(upp);
                 }
                 else
                 {
@@ -295,16 +239,7 @@
         {
             if(down == true && lose == true)
             {
-                document.getElementById(tailLength).style.width = "25px";
-                for(let i = 0; i <= tailLength; i++)
-                {
-                    document.getElementById(i).style.transform = "rotate(90deg)";
-                }
-                for(let i = 0; i < tailLength + 1; i++)
-                {
-                    headLeft[i] = document.getElementById(i).style.left;
-                    headTop[i] = document.getElementById(i).style.top;
-                }
+                rotationOfSnake("rotate(90deg)")
                 if(verticalPositionOf0 < verticalNumberOfPoints - 2)
                 {  
                     verticalPositionOf0++
@@ -315,17 +250,8 @@
                         document.getElementById(i+1).style.top = headTop[i];
                     }
                     gettingPoint();
-                    for(let i = 1;i <= tailLength; i++) 
-                        {
-                            for(let j = 1;j <= tailLength; j++)
-                            {
-                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
-                                {
-                                    clearInterval(downn);
-                                    loseFuntion();
-                                }
-                            };
-                        };
+                    curves();
+                    cuttingTale(downn);
                 }
                 else
                 {
@@ -381,11 +307,25 @@
                     downMovingSnake();
                 }
                     break;
-            }   
-        }
+            }
+            }
+
             let price = document.createElement("div");
             price.id = "price";
 
+        let rotationOfSnake = function(transforming)
+        {
+            document.getElementById(tailLength).style.width = "25px";
+                    for(let i = 0; i <= tailLength; i++)
+                    {
+                        document.getElementById(i).style.transform = transforming;
+                    }
+                    for(let i = 0; i < tailLength + 1; i++)
+                    {
+                        headLeft[i] = document.getElementById(i).style.left;
+                        headTop[i] = document.getElementById(i).style.top;
+                    }
+        }
         let priceFunction = function()
         {
             board.appendChild(price);
@@ -402,6 +342,10 @@
         {
             if(lose == true)
             {
+                right = false;
+                left = false;
+                up = false;
+                down = false;
                 alert("Ziom przegrałeś. \n Twój wynik to " + point + " pkt. \n Ale nie poddawaj się, próbuj dalej!!!");
                 document.getElementById("0").style.left = widthOfPoint * beginningPositionOfSnake + "px";
                 document.getElementById("0").style.top = heightOfPoint * beginningPositionOfSnake + "px";
@@ -410,10 +354,6 @@
                 verticalPositionOf0 = document.getElementById("0").style.top.slice(0,document.getElementById("0").style.top.length-2)/widthOfPoint; 
                 point = 0;
                 tableOfPoints.innerText = "Twoje punkty \n" + point;
-                right = false;
-                left = false;
-                up = false;
-                down = false;
                 clearInterval(loseFuntion)
                 for(let i = 1; i <= tailLength; i++)
                 {
@@ -432,6 +372,60 @@
                 growingSnake();
                 priceFunction();
             }
+        }
+        let cuttingTale = function(direction)
+        {
+            for(let i = 1;i <= tailLength; i++) 
+                        {
+                            for(let j = 1;j <= tailLength; j++)
+                            {
+                                if(document.getElementById(i).style.left == document.getElementById("0").style.left && document.getElementById(i).style.top == document.getElementById("0").style.top)
+                                {
+                                    clearInterval(direction);
+                                    loseFuntion();
+                                }
+                            };
+                        };
+        }
+        let curves = function()
+        {
+                for(let i = 0; i <= tailLength; i++)
+                {
+                    document.getElementById(i).style.backgroundColor = "";
+                    if(i >= 1 && i < tailLength)
+                    {
+                        let iPositionTop = parseInt(document.getElementById(i).style.top);
+                        let lessiPosistionTop = parseInt(document.getElementById(i-1).style.top);
+                        let grossiPositionTop = parseInt(document.getElementById(i+1).style.top);
+                        let iPositionLeft = parseInt(document.getElementById(i).style.left);
+                        let lessiPosistionLeft = parseInt(document.getElementById(i-1).style.left);
+                        let grossiPositionLeft = parseInt(document.getElementById(i+1).style.left);
+                        if( ((iPositionTop == lessiPosistionTop) && (iPositionTop == grossiPositionTop-30) && (iPositionLeft == lessiPosistionLeft+30) && iPositionLeft == grossiPositionLeft) || ((iPositionTop == lessiPosistionTop-30) && (iPositionTop == grossiPositionTop) && (iPositionLeft == lessiPosistionLeft) && iPositionLeft == grossiPositionLeft + 30) )
+                        {
+                            document.getElementById(i).style.backgroundImage = "url('images/1.png')";
+                            document.getElementById(i).style.transform = "rotate(0deg)";
+                        }
+                        else if( ((iPositionTop == lessiPosistionTop - 30) && (iPositionTop == grossiPositionTop) && (iPositionLeft == lessiPosistionLeft) && (iPositionLeft == grossiPositionLeft - 30) ) || ((iPositionTop == lessiPosistionTop) && (iPositionTop == grossiPositionTop - 30) && (iPositionLeft == lessiPosistionLeft - 30) && iPositionLeft == grossiPositionLeft) )
+                        {
+                            document.getElementById(i).style.backgroundImage = "url('images/2.png')";
+                            document.getElementById(i).style.transform = "rotate(0deg)";
+                        }
+                        else if( ((iPositionTop == lessiPosistionTop + 30) && (iPositionTop == grossiPositionTop) && (iPositionLeft == lessiPosistionLeft) && (iPositionLeft == grossiPositionLeft - 30) ) || ((iPositionTop == lessiPosistionTop) && (iPositionTop == grossiPositionTop + 30) && (iPositionLeft == lessiPosistionLeft - 30) && iPositionLeft == grossiPositionLeft) )
+                        {
+                            document.getElementById(i).style.backgroundImage = "url('images/3.png')";
+                            document.getElementById(i).style.transform = "rotate(0deg)";
+                        }
+                        else if( ((iPositionTop == lessiPosistionTop + 30) && (iPositionTop == grossiPositionTop) && (iPositionLeft == lessiPosistionLeft) && (iPositionLeft == grossiPositionLeft + 30) ) || ((iPositionTop == lessiPosistionTop) && (iPositionTop == grossiPositionTop + 30) && (iPositionLeft == lessiPosistionLeft + 30) && iPositionLeft == grossiPositionLeft) )
+                        {
+                            document.getElementById(i).style.backgroundImage = "url('images/4.png')";
+                            document.getElementById(i).style.transform = "rotate(0deg)";
+                        }
+                        else
+                        {
+                            document.getElementById(i).style.backgroundImage = "url('images/ogon.png')";
+                        }
+                    }
+                }
         }
     </script>
 </body>
