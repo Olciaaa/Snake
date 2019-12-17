@@ -29,7 +29,7 @@ nav
 }
         .alert
         {
-            background-color: lavender;
+            background-color: rgba(230,230,250,0.9);
             border: 3px groove rgb(26, 65, 96);
             margin: 0 auto;
             text-align: center;

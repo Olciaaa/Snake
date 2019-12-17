@@ -139,6 +139,7 @@
 
         let headLeft = [];
         let headTop = [];
+        let transformation = [];
 
         let lose = true;
 
@@ -147,16 +148,18 @@
             let rightt = setInterval(function()
             {
                 if(right == true && lose == true)
-                {
-                    rotationOfSnake("rotate(0deg)");
+                {   
+                    rotationOfSnake();
                     if(horizontalPositionOf0 < horizontalNumberOfPoints - 2)
                     {  
                         horizontalPositionOf0++
-                        snake.style.left = widthOfPoint * (horizontalPositionOf0) + "px"
+                        snake.style.left = widthOfPoint * (horizontalPositionOf0) + "px";
+                        snake.style.transform = "rotate(0deg)";
                         for(let i = 0; i < tailLength; i++)
                         {
                             document.getElementById(i+1).style.left = headLeft[i];
                             document.getElementById(i+1).style.top = headTop[i];
+                            document.getElementById(i+1).style.transform=transformation[i];
                         }
                         gettingPoint();
                         curves();
@@ -178,15 +181,17 @@
         {
             if(left == true && lose == true)
             {
-                rotationOfSnake("scale(-1,1)");
+                rotationOfSnake();
                 if(horizontalPositionOf0 > 1)
                 {  
                     horizontalPositionOf0--
                     snake.style.left = widthOfPoint * horizontalPositionOf0 + "px"
+                    snake.style.transform = "scale(-1,1)";
                     for(let i = 0; i < tailLength; i++)
                     {
                         document.getElementById(i+1).style.left = headLeft[i];
                         document.getElementById(i+1).style.top = headTop[i];
+                        document.getElementById(i+1).style.transform=transformation[i];
                     }
                     gettingPoint();
                     curves();
@@ -208,16 +213,18 @@
         {
             if(up == true && lose == true)
             {
-                rotationOfSnake("rotate(-90deg)")
+                rotationOfSnake()
 
                 if(verticalPositionOf0 > 1)
                 {  
                     verticalPositionOf0--
                     snake.style.top = heightOfPoint * verticalPositionOf0 + "px"
+                    snake.style.transform = "rotate(-90deg)";
                     for(let i = 0; i < tailLength; i++)
                     {
                         document.getElementById(i+1).style.left = headLeft[i];
                         document.getElementById(i+1).style.top = headTop[i];
+                        document.getElementById(i+1).style.transform=transformation[i];
                     }
                     gettingPoint();
                     curves();
@@ -239,15 +246,17 @@
         {
             if(down == true && lose == true)
             {
-                rotationOfSnake("rotate(90deg)")
+                rotationOfSnake()
                 if(verticalPositionOf0 < verticalNumberOfPoints - 2)
                 {  
                     verticalPositionOf0++
-                    snake.style.top = heightOfPoint * verticalPositionOf0 + "px"
+                    snake.style.top = heightOfPoint * verticalPositionOf0 + "px";
+                    snake.style.transform = "rotate(90deg)";
                     for(let i = 0; i < tailLength; i++)
                     {
                         document.getElementById(i+1).style.left = headLeft[i];
                         document.getElementById(i+1).style.top = headTop[i];
+                        document.getElementById(i+1).style.transform=transformation[i];
                     }
                     gettingPoint();
                     curves();
@@ -313,17 +322,15 @@
             let price = document.createElement("div");
             price.id = "price";
 
-        let rotationOfSnake = function(transforming)
+        let rotationOfSnake = function()
         {
             document.getElementById(tailLength).style.width = "25px";
-                    for(let i = 0; i <= tailLength; i++)
-                    {
-                        document.getElementById(i).style.transform = transforming;
-                    }
+
                     for(let i = 0; i < tailLength + 1; i++)
                     {
                         headLeft[i] = document.getElementById(i).style.left;
                         headTop[i] = document.getElementById(i).style.top;
+                        transformation[i] = document.getElementById(i).style.transform;
                     }
         }
         let priceFunction = function()
@@ -370,6 +377,11 @@
                 point++
                 tableOfPoints.innerText = "Twoje punkty \n" + point;
                 growingSnake();
+                for(let i = 1; i<tailLength; i++)
+                {
+                    document.getElementById(i).style.backgroundImage="url('images/ogon.png')";
+                }
+                document.getElementById(tailLength).style.backgroundImage="url('images/tlooo.png')";
                 priceFunction();
             }
         }
